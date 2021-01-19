@@ -3,13 +3,10 @@ const client = new Discord.Client();
 const prefix = '!';
 const fs = require('fs');
 const { exit } = require('process');
-var token;
-try{
-    token = fs.readFileSync('./token.txt').toString('utf-8');
-}catch(err){
-    console.log("token.txt with BlueBot token not found.");
-}
 
+var data = JSON.parse(fs.readFileSync('id.json'));
+const discordToken = data.SecretKeys[0].id;
+const wolframAppID = data.SecretKeys[1].id;
 
 client.commands = new Discord.Collection();
 
@@ -18,8 +15,6 @@ for (const file of commandFiles){
     const command = require(`./cmd/${file}`);
     client.commands.set(command.name, command);
 }
-
-console.log(client.commands.get('help').name);
 
 client.on('ready', () =>{
     console.log(`${client.user.tag} is online`);
@@ -38,7 +33,7 @@ client.on('message', message =>{
 });
 
 try{
-    client.login(token);
+    client.login(discordToken);
 }catch(err){
     console.log(err);
     exit();
