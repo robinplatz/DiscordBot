@@ -19,6 +19,8 @@ for (const file of commandFiles){
     client.commands.set(command.name, command);
 }
 
+console.log(client.commands.get('help').name);
+
 client.on('ready', () =>{
     console.log(`${client.user.tag} is online`);
 });
@@ -30,10 +32,9 @@ client.on('message', message =>{
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    if(command === 'help'){
-        client.commands.get('help').execute(message, args);
+    if(client.commands.get(command)!=null){
+        client.commands.get(command).execute(message, args);
     }
-    
 });
 
 try{
