@@ -5,8 +5,8 @@ const fs = require('fs');
 const { exit } = require('process');
 
 var data = JSON.parse(fs.readFileSync('id.json'));
-const discordToken = data.SecretKeys[0].id;
-const wolframAppID = data.SecretKeys[1].id;
+global.discordToken = data.SecretKeys[0].id;
+global.wolframAppID = data.SecretKeys[1].id;
 
 client.commands = new Discord.Collection();
 
