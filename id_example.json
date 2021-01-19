@@ -1,0 +1,11 @@
+{
+ "SecretKeys": 
+ [
+  {"name": "DiscordToken",
+   "id": "your key here"
+   },
+  {"name": "WolframAlphaAppID",
+   "id": "your key here"
+   }
+  ]
+}
