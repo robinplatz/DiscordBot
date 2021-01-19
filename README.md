@@ -5,4 +5,4 @@ generate your Bot
 https://discord.com/developers/
 
 2.
-copy bot token into ./token.txt
+copy your personalized Bot Token and optional API tokens into ./id.json
