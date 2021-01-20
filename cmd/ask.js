@@ -1,8 +1,8 @@
 // wolfram alpha api calls, limited to 2000/month
-// strore your  personal Api access in id.json
+// store your  personal Api access in id.json
 module.exports = {
     name: 'ask',
-    description: 'calls wolfram alpha simple api',
+    description: 'me any question, I will use wolfram alpha to attempt to answer it',
     execute(message, args) {
         const Discord = require('discord.js');
         const WolframAlphaAPI = require('wolfram-alpha-api');

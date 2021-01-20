@@ -4,6 +4,7 @@ module.exports = {
     description: 'prints a random useless fact',
     execute(message) {
         const https = require('https');
+        const Discord = require('discord.js');
         const options = {
             hostname: 'uselessfacts.jsph.pl',
             path: '/random.json',
@@ -19,7 +20,13 @@ module.exports = {
             });
 
             res.on('end', () => {
-                message.channel.send(JSON.parse(data).text);
+                let fact = JSON.parse(data);
+                const response = new Discord.MessageEmbed()
+                .setAuthor(`Useless fact for ${message.author.username}`)
+                .setDescription(fact.text)
+                .addField('source', (fact.source_url));
+
+                message.channel.send(response);
             });
         });
 
