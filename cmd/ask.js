@@ -17,6 +17,10 @@ module.exports = {
             .attachFiles([{ name: 'result.png', attachment:imageStream }])
             .setImage('attachment://result.png');
             message.channel.send(response);
-          }).catch(console.error);
+          }).catch((error) => {
+              const response = new Discord.MessageEmbed()
+              .setDescription('Wolfram|Alpha did not understand your input');
+              message.channel.send(response);
+          });
     },
 };
