@@ -23,8 +23,9 @@ module.exports = {
                 let fact = JSON.parse(data);
                 const response = new Discord.MessageEmbed()
                 .setAuthor(`Useless fact for ${message.author.username}`)
-                .setDescription(fact.text);
+                .setDescription(fact.text)
                 //.addField('source', (fact.source_url))
+                .setColor('RANDOM');
 
                 message.channel.send(response);
             });
