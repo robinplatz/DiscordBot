@@ -3,7 +3,7 @@ const client = new Discord.Client();
 global.prefix = '>';
 const fs = require('fs');
 const { exit } = require('process');
-
+const market = require('./cmd/market');
 const data = JSON.parse(fs.readFileSync('id.json'));
 global.discordToken = data.SecretKeys[0].id;
 global.wolframAppID = data.SecretKeys[1].id;
@@ -13,6 +13,9 @@ client.commands = new Discord.Collection();
 global.helpContent = '';
 
 const commandFiles = fs.readdirSync('./cmd/').filter(file => file.endsWith('.js'));
+
+let refreshMarketIntervall = 120000;
+
 for (const file of commandFiles) {
 	const command = require(`./cmd/${file}`);
     client.commands.set(command.name, command);
@@ -30,7 +33,12 @@ client.on('message', message =>{
     const command = args.shift().toLowerCase();
 
     if(client.commands.get(command) != null) {
-        client.commands.get(command).execute(message, args);
+        if(command === 'market') {
+            console.log('start listening to market registration queue');
+            setInterval(() => market.execute(message), refreshMarketIntervall);
+        } else {
+            client.commands.get(command).execute(message, args);
+        }
     }
 });
 
