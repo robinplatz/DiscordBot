@@ -1,7 +1,6 @@
 // communicate with the oobabooga text-generation-webui api
 
 import request from 'request';
-import Discord from 'discord.js';
 
 export const name = 'llm';
 export const description = 'talk with a local hosted LLM';
@@ -9,8 +8,10 @@ export const description = 'talk with a local hosted LLM';
 let HOST = '127.0.0.1';
 
 export function execute(message) {
+    // add a preamble or system prompt
+    const prompt_preamble = `${message.content}>`;
     const body = {
-        'prompt': message.content,
+        'prompt': prompt_preamble,
         'max_new_tokens': 250,
         'do_sample': true,
         'temperature': 0.7,
@@ -44,7 +45,6 @@ export function execute(message) {
         }
         console.log(body.results[0].text);
         message.channel.send(`@${message.author.username} ${body.results[0].text.replace('\n', '')}`);
-
     });
 };
 

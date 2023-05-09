@@ -1,7 +1,7 @@
 import Discord from 'discord.js';
 const intents = new Discord.Intents(32767);
 export const client = new Discord.Client({ intents });
-global.prefix = '!';
+global.prefix = '>';
 import { readFileSync, readdirSync } from 'fs';
 import { exit } from 'process';
 const data = JSON.parse(readFileSync('id.json'));
