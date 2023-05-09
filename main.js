@@ -1,7 +1,7 @@
 import Discord from 'discord.js';
 const intents = new Discord.Intents(32767);
 export const client = new Discord.Client({ intents });
-global.prefix = '>';
+global.prefix = '!';
 import { readFileSync, readdirSync } from 'fs';
 import { exit } from 'process';
 const data = JSON.parse(readFileSync('id.json'));
@@ -15,6 +15,7 @@ import help from './cmd/help.js';
 import fact from './cmd/fact.js';
 import ask from './cmd/ask.js';
 import market from './cmd/market.js';
+import llm from './cmd/llm.js';
 
 const commandFiles = readdirSync('./cmd/').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -31,6 +32,9 @@ for (const file of commandFiles) {
             break;
         case 'market.js':
             command = market;
+            break;
+        case 'llm.js':
+            command = llm;
             break;
         default:
             console.log('unknown command');
