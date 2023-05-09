@@ -12,3 +12,5 @@ Setup :
 1. [generate](https://discord.com/developers/) your Bot 
 
 2. copy your personalized Bot Token and optional API tokens into ./id_example.json then rename to id.json
+
+3. run 'npm i' and 'node .'
