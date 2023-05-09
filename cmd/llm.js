@@ -9,6 +9,7 @@ let HOST = '127.0.0.1';
 
 export function execute(message) {
     // add a preamble or system prompt
+    message.content = message.content.slice(1).split(/ +/);
     const prompt_preamble = `${message.content}>`;
     const body = {
         'prompt': prompt_preamble,
