@@ -1,26 +1,47 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
+import Discord from 'discord.js';
+const intents = new Discord.Intents(32767);
+export const client = new Discord.Client({ intents });
 global.prefix = '>';
-const fs = require('fs');
-const { exit } = require('process');
-const market = require('./cmd/market');
-const data = JSON.parse(fs.readFileSync('id.json'));
+import { readFileSync, readdirSync } from 'fs';
+import { exit } from 'process';
+const data = JSON.parse(readFileSync('id.json'));
 global.discordToken = data.SecretKeys[0].id;
 global.wolframAppID = data.SecretKeys[1].id;
 
 client.commands = new Discord.Collection();
-
 global.helpContent = '';
 
-const commandFiles = fs.readdirSync('./cmd/').filter(file => file.endsWith('.js'));
+import help from './cmd/help.js';
+import fact from './cmd/fact.js';
+import ask from './cmd/ask.js';
+import market from './cmd/market.js';
 
-let refreshMarketIntervall = 120000;
-
+const commandFiles = readdirSync('./cmd/').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
-	const command = require(`./cmd/${file}`);
+    let command;
+    switch (file) {
+        case 'help.js':
+            command = help;
+            break;
+        case 'fact.js':
+            command = fact;
+            break;
+        case 'ask.js':
+            command = ask;
+            break;
+        case 'market.js':
+            command = market;
+            break;
+        default:
+            console.log('unknown command');
+            exit(1);
+    }
     client.commands.set(command.name, command);
     helpContent += `${global.prefix}${command.name} ${command.description}\n`;
 }
+console.log(client.commands);
+
+let refreshMarketIntervall = 120000;
 
 client.on('ready', () => {
     console.log(`${client.user.tag} is online`);
@@ -31,11 +52,11 @@ client.on('message', message =>{
     if(!message.content.startsWith(global.prefix) || message.author.bot) return;
     const args = message.content.slice(global.prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
-
+    console.log(command, args);
     if(client.commands.get(command) != null) {
         if(command === 'market') {
             console.log('start listening to market registration queue');
-            setInterval(() => market.execute(message), refreshMarketIntervall);
+            setInterval(() => execute(message), refreshMarketIntervall);
         } else {
             client.commands.get(command).execute(message, args);
         }
