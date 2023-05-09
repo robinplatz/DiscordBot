@@ -39,7 +39,7 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command);
     helpContent += `${global.prefix}${command.name} ${command.description}\n`;
 }
-console.log(client.commands);
+// console.log(client.commands);
 
 let refreshMarketIntervall = 120000;
 
@@ -52,7 +52,7 @@ client.on('message', message =>{
     if(!message.content.startsWith(global.prefix) || message.author.bot) return;
     const args = message.content.slice(global.prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
-    console.log(command, args);
+    console.log('cmd:', command, 'args:', args, `asked in ${message.guild.name}:${message.channel.name} by ${message.author.username} at ${new Date().toLocaleTimeString()}`);
     if(client.commands.get(command) != null) {
         if(command === 'market') {
             console.log('start listening to market registration queue');

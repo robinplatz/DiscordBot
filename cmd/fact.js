@@ -7,7 +7,7 @@ export const description = 'prints a random useless fact';
 export function execute(message) {
     const options = {
         hostname: 'uselessfacts.jsph.pl',
-        path: '/random.json',
+        path: '/api/v2/facts/random',
         method: 'GET',
     };
 

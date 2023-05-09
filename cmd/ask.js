@@ -4,7 +4,7 @@ import Discord from 'discord.js';
 import WolframAlphaAPI from 'wolfram-alpha-api';
 
 export const name = 'ask';
-export const description = 'me any question, I will use wolfram alpha to attempt to answer it';
+export const description = 'use wolfram alpha api to answer your question';
 export function execute(message, args) {
 
     const waApi = WolframAlphaAPI(global.wolframAppID);
