@@ -11,25 +11,25 @@ let HOST = '127.0.0.1';
 export function execute(message) {
     const body = {
         'prompt': message.content,
-        // 'max_new_tokens': 250,
-        // 'do_sample': true,
-        // 'temperature': 1.3,
-        // 'top_p': 0.1,
-        // 'typical_p': 1,
-        // 'repetition_penalty': 1.18,
-        // 'top_k': 40,
-        // 'min_length': 0,
-        // 'no_repeat_ngram_size': 0,
-        // 'num_beams': 1,
-        // 'penalty_alpha': 0,
-        // 'length_penalty': 1,
-        // 'early_stopping': False,
-        // 'seed': -1,
-        // 'add_bos_token': True,
-        // 'truncation_length': 2048,
-        // 'ban_eos_token': false,
-        // 'skip_special_tokens': true,
-        // 'stopping_strings': []
+        'max_new_tokens': 250,
+        'do_sample': true,
+        'temperature': 0.7,
+        'top_p': 0.1,
+        'typical_p': 1,
+        'repetition_penalty': 1.18,
+        'top_k': 40,
+        'min_length': 0,
+        'no_repeat_ngram_size': 0,
+        'num_beams': 1,
+        'penalty_alpha': 0,
+        'length_penalty': 1,
+        'early_stopping': false,
+        'seed': -1,
+        'add_bos_token': true,
+        'truncation_length': 2048,
+        'ban_eos_token': false,
+        'skip_special_tokens': true,
+        'stopping_strings': []
     };
 
     const options = {
@@ -42,15 +42,9 @@ export function execute(message) {
         if (err) {
             return console.log(err);
         }
-        console.log(`statusCode: ${res.statusCode}`);
-        console.log(body);
+        console.log(body.results[0].text);
+        message.channel.send(`@${message.author.username} ${body.results[0].text.replace('\n', '')}`);
 
-        const response = new Discord.MessageEmbed()
-            .setAuthor(`LLM for ${message.author.username}`)
-            .setDescription(body.results[0].text)
-            .setColor('RANDOM');
-
-        message.channel.send(response);
     });
 };
 
